@@ -14,12 +14,12 @@ function LogIn() {
       // When logging in, send a POST to <our future URL>/api/token/ to obtain a new token for that browser session
       // Sends username and password only when logging in to obtain a token for that user
       // The backend manually sets the token in the response cookies to be automatically put in the browser's HttpOnly cookies
-      await axios.post('http://api.movieconnect.com:80/api/token/', { username, password }, {
+      await axios.post('http://localhost:80/api/token/', { username, password }, {
         withCredentials: true // Cookies will be blank in the request but filled in inside the response and automatically added to browser cookies
       });
       navigate('/'); // Redirect to home page after successful login
     } catch (error) {
-      console.error('Login failed:', error.response.data);
+      console.error('Login failed:', error.response);
     }
   };
 
