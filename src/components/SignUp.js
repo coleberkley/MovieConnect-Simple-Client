@@ -14,7 +14,7 @@ function SignUp() {
       // Since signing up a user routes a user to LogIn, it only checks with the backend if a
       // user can be created and if it can, it creates the user in the database but doesn't log the user in.
       // When you log in, that's when you request a web token 
-        await axios.post('http://localhost:8000/api/user/signup/', { username, password }, {
+        await axios.post('http://localhost:80/api/user/signup/', { username, password }, {
             withCredentials: true // Will be blank for sign up page but good to always include cookies whether signed in or not for consistency
         });
         navigate('/login'); // Redirect to login page after successful signup

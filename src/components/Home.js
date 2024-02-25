@@ -8,8 +8,7 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("Fetching user profile");
-    axios.get('http://localhost:8000/api/user/profile/', {
+    axios.get('http://localhost:80/api/user/profile/', {
       withCredentials: true // Ensure credentials/cookies are included with the request
     })
     .then(response => {
@@ -17,7 +16,6 @@ function Home() {
       setUserData(response.data);
     })
     .catch((error) => {
-      // Improved error handling
       if (error.response) {
         console.error("Profile fetch error:", error.response.data);
       } else if (error.request) {
@@ -29,12 +27,26 @@ function Home() {
     });
   }, [navigate]);
 
+  const handleLogout = () => {
+    axios.post('http://localhost:80/api/user/logout/', {}, {
+      withCredentials: true // Important for sending the HttpOnly cookie back to the server
+    })
+    .then(() => {
+      navigate('/login'); // Redirect to login after successful logout
+    })
+    .catch((error) => {
+      console.error("Logout error:", error.message);
+      // Optionally handle logout errors specifically, for example, by showing a message to the user
+    });
+  };
+
   return (
     <div>
       <h2>Home</h2>
       {userData ? (
         <div>
           <p>Welcome, {userData.username}!</p>
+          <button onClick={handleLogout}>Logout</button> {/* Logout Button */}
         </div>
       ) : (
         <p>Loading user data...</p>
@@ -44,5 +56,6 @@ function Home() {
 }
 
 export default Home;
+
 
 
